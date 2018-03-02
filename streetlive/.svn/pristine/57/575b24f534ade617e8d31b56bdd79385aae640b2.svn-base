@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>StreetLive</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="css/semantic.min.css">
+		<script
+		  src="https://code.jquery.com/jquery-3.1.1.min.js"
+		  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+		  crossorigin="anonymous"></script>
+		<script src="js/semantic.min.js"></script>
+		<link href="https://use.fontawesome.com/releases/v5.0.7/css/all.css" rel="stylesheet">
+
+		<!-- For Slider -->
+	    <link rel="stylesheet" href="css/owl.carousel.min.css" />
+	    <link rel="stylesheet" href="css/owl.theme.default.min.css" />
+
+	    <!-- Personnal CSS -->
+		<link rel="stylesheet" type="text/css" href="css/main.css">
+	</head>
+
+	<body>
+		<section id="header">
+			<div id="title">
+				<h1>StreetLive</h1>
+			</div>
+		</section>
+		<section id="screens" class="my-container">
+			<div class="container-title">
+				<h2>Notre produit</h2>
+			</div>
+			<div class="container-body">
+				<img src="media/screenshot.png" style="text-align: left; width: 60%; margin: 40px 0" />
+				<p>StreetLive est une application mobile (Android/iOS) vous permettant de trouver des street artists autour de vous et de vous promouvoir en tant qu’artiste. L’application vous permet de découvrir des artistes à votre goût et de les suivre. Faites découvrir des artistes ou faites grandir votre communauté grâce à StreetLive, le Waze du street art.</p>
+			</div>
+		</section>
+		<section id="points" class="my-container">
+			<div class="container-title">
+				<h2>Nos atouts</h2>
+			</div>
+			<div class="container-body">
+				<div class="ui equal width center aligned padded grid">
+					<div class="row">
+						<div class="column block">
+							<span class="icon major fas fa-comments"></span>
+							<h3>Une communauté</h3>
+							<h4>Notre solution permet aux artistes de mettre en avant leur talent, leur spectacle, en les mettant en avant aux amateurs qui se situent aux alentours</h4>
+						</div>
+						<div class="column block">
+							<span class="icon major fas fa-search"></span>
+							<h3>Un outil</h3>
+							<h4>Notre solution fournit une map référençant tous les artistes ou spectacles se situant autour de l'utilisateur, lui permettant une accessibilité accrue</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section id="team" class="my-container">
+			<div class="container-title">
+				<h2>Notre équipe</h2>
+			</div>
+			<div class="container-body">
+				<div class="ui equal width center aligned padded grid">
+					<div class="row" style="margin: 10% auto">
+				        <div class="owl-carousel owl-theme">
+							<div class="team-pic">
+								<img src="media/charles.png"/>
+								<h3>Charles</h3>
+								<span>Dév Full-Stack</span>
+							</div>
+							<div class="team-pic">
+								<img src="media/nicolas.png"/>
+								<h3>Nicolas</h3>
+								<span>Dév Back</span>
+							</div>
+							<div class="team-pic">
+								<img src="media/benjamin.jpg"/>
+								<h3>Benjamin</h3>
+								<span>Dév Back</span>
+							</div>
+							<div class="team-pic">
+								<img src="media/matthieu.jpg"/>
+								<h3>Matthieu</h3>
+								<span>Responsable Comm</span>
+							</div>
+<!-- 							<div class="team-pic">
+								<img src="media/matthieu.jpg"/>
+								<h3>Renaud</h3>
+								<span>Dév Front</span>
+							</div>-->
+ 							<div class="team-pic">
+								<img src="media/sophie.jpg"/>
+								<h3>Sophie</h3>
+								<span>Dév Front</span>
+							</div>
+ 							<div class="team-pic">
+								<img src="media/juninho.jpg"/>
+								<h3>Juninho</h3>
+								<span>Génie footballistique</span>
+							</div>
+ 							<div class="team-pic">
+								<img src="media/lorenzo.jpg"/>
+								<h3>Lorenzo</h3>
+								<span>Grand Art</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section id="contact" class="my-container">
+			<div class="container-title">
+				<h2>Nous contacter</h2>
+			</div>
+			<div class="container-body">
+				<div class="ui equal width center aligned padded grid">
+					<div class="row">
+						<div class="column">
+							<h3><i class="fab fa-facebook-square"></i><a href="https://www.facebook.com/StreetLiveFrance/" target="_blank">Notre facebook</a></h3>
+						</div>
+						<div class="column">
+							<h3><i class="fas fa-envelope"></i> <a href="mailto:streetlive_2020@labeip.epitech.eu">Notre mail</a></h3>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	    <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+	    <script type="text/javascript" src="js/main.js"></script>
+	</body>
+
+</html>

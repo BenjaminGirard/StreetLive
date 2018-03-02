@@ -1,0 +1,136 @@
+html, body {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+html, body, section {
+	height: 100%;
+}
+
+h1 {
+	font-size: 4em;
+}
+
+h2 {
+	font-size: 3em;
+}
+
+p {
+	font-size: 1.5em;
+}
+
+#header {
+	background-image: url('../media/background.jpg');
+	background-size: cover;
+	color: white;
+	filter: grayscale(50%);
+}
+
+	#title {
+		position: absolute;
+		transform: translate(-50%, -75%);
+		left: 50%;
+		top: 50%;
+		text-align: center;
+	}
+
+#screens {
+	background-image: -webkit-linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
+	background-image: 	 -moz-linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
+	background-image: 	  -ms-linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
+	background-image:	 	  linear-gradient(90deg, #efa8b0, #a89cc8, #8cc9f0);
+}
+
+.my-container {
+	padding: 3% 20%;
+	text-align: center;
+	color: white;
+}
+
+.container-title {
+	margin: 3% 0;
+}
+
+#points {
+	background-color: white;
+}
+
+	#points .container-title {
+		color: #a3a3a3;
+	}
+
+	.icon.major	{
+	    border-color: rgba(255, 255, 255, 0.35);
+	}
+
+	@media screen and (max-width: 1680px) {
+		.icon.major:before {
+		    font-size: 5.5rem;
+		}
+	}
+
+	.icon.major {
+	    border: solid 1px;
+	    display: inline-block;
+	    border-radius: 100%;
+	    padding: 0.65em;
+	    margin: 0 0 2em 0;
+	    cursor: default;
+	}
+
+	.icon.major:before {
+	    display: inline-block;
+	    font-size: 6.25rem;
+	    width: 2.25em;
+	    height: 2.25em;
+	    line-height: 2.2em;
+	    border-radius: 100%;
+	    border: solid 1px;
+	    text-align: center;
+	}
+
+	.block {
+		background-color: white;
+		border-radius: 25px;
+		color: #a3a3a3;
+		padding: 20px;
+		margin: 5% 3% !important;
+	}
+
+#team {
+	background-image: linear-gradient(135deg, #02021d, #5e2e5c);
+}
+
+#team.my-container {
+	padding: 3% 10%;
+}
+
+	.team-pic {
+		margin: auto;
+		width: 50%;
+	}
+
+	.team-pic img {
+		border-radius: 50%;
+		filter: grayscale(100%);
+	}
+
+	.team-pic img:hover {
+		filter: grayscale(0%);
+	}
+
+#contact {
+	height: 50%;
+	/*background-color: black;*/
+	background-color: #303030;
+	color: white;
+}
+	#contact .container-body {
+		margin: 10% auto;
+	}
+
+	#contact a {
+		color: white;
+		margin-left: 2ch;
+	}
