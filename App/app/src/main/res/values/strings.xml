@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">StreetLive</string>
     <string name="title_activity_artist_locate">Map</string>
+    <string name="facebook_app_id">187855855161121</string>
+    <string name="fb_login_protocol_scheme">fb187855855161121</string>
+    <string name="com.twitter.sdk.android.CONSUMER_KEY">N2GPGLvujMlXi3bWsGRoMVYwp</string>
+    <string name="com.twitter.sdk.android.CONSUMER_SECRET">iOjm4aSTLINPTuTGcsrPxQ0FDtAfYjob0koksBsCAMU4qCmZBH</string>
 </resources>
