@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.tetard.streetlive.Database.DatabaseHandler;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -29,6 +30,8 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 public class AuthentificationActivity extends AppCompatActivity {
 
+    DatabaseHandler db = new DatabaseHandler();
+
     /*
     *  FACEBOOK variables
     * */
@@ -49,8 +52,6 @@ public class AuthentificationActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         /*
         *  Facebook initialization (app ID and secret in manifests/AndroidManifest.xml)
@@ -73,11 +74,17 @@ public class AuthentificationActivity extends AppCompatActivity {
         Log.wtf("ONCREATE", "entered create");
         Log.wtf("CREATE", "quit create");
 
+        db.connect("http://127.0.0.1:3306/phpmyadmin/index.php?db=test&table=category&target=sql.php&token=7ba13a3a742ca58c4a4e2c4418f99134#PMAURL:db=test&table=category&target=sql.php&token=7ba13a3a742ca58c4a4e2c4418f99134");
         twitterLoginCallback();
         mTwitterAuthClient = new TwitterAuthClient();
     }
     public void connectButton(View view) {
         Intent intent = new Intent(this, ArtistLocate.class);
+        startActivity(intent);
+    }
+
+    public void signupButton(View view) {
+        Intent intent = new Intent(this, CreateUserActivity.class);
         startActivity(intent);
     }
 
@@ -135,5 +142,6 @@ public class AuthentificationActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         _twLoginButton.onActivityResult(requestCode, resultCode, data);
     }
+
 
 }

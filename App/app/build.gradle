@@ -16,17 +16,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:appcompat-v7:27.0.2'
     // facebook sdk
-    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation 'com.facebook.android:facebook-android-sdk:4.31.0'
     // twitter-core login and api access
     compile 'com.twitter.sdk.android:twitter-core:3.1.1'
     // tweets UI
-    compile 'com.twitter.sdk.android:tweet-ui:3.1.1'
+    //compile 'com.twitter.sdk.android:tweet-ui:3.1.1'
+
+    // httpClient
+    compile 'org.apache.httpcomponents:httpclient:4.5.5'
 
     implementation 'com.google.android.gms:play-services-maps:11.8.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
