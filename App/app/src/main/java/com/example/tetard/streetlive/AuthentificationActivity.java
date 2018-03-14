@@ -107,7 +107,7 @@ public class AuthentificationActivity extends AppCompatActivity {
             Log.wtf("SQL FAIL", "connectButton: " + e.getMessage());
         }
 
-        Intent intent = new Intent(this, ArtistLocate.class);
+        Intent intent = new Intent(this, MapActivity.class);
         startActivity(intent);
     }
 
