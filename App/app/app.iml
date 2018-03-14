@@ -154,10 +154,13 @@
     <orderEntry type="library" name="com.android.support:appcompat-v7-27.0.2" level="project" />
     <orderEntry type="library" name="com.facebook.android:facebook-applinks-4.31.0" level="project" />
     <orderEntry type="library" name="com.android.support:support-annotations:27.0.2@jar" level="project" />
+    <orderEntry type="library" name="com.android.support:design-27.0.2" level="project" />
     <orderEntry type="library" scope="TEST" name="junit:junit:4.12@jar" level="project" />
     <orderEntry type="library" name="com.twitter.sdk.android:twitter-core-3.1.1" level="project" />
     <orderEntry type="library" scope="TEST" name="com.android.support.test.espresso:espresso-core-3.0.1" level="project" />
+    <orderEntry type="library" name="com.android.support:transition-27.0.2" level="project" />
     <orderEntry type="library" scope="TEST" name="javax.inject:javax.inject:1@jar" level="project" />
+    <orderEntry type="library" name="com.android.support:recyclerview-v7-27.0.2" level="project" />
     <orderEntry type="library" name="com.parse.bolts:bolts-applinks:1.4.0@jar" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-maps-license-11.8.0" level="project" />
     <orderEntry type="library" name="com.google.code.gson:gson:2.7@jar" level="project" />

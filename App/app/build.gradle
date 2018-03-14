@@ -24,6 +24,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.0.2'
+    implementation 'com.android.support:design:27.0.2'
+
     // facebook sdk
     implementation 'com.facebook.android:facebook-android-sdk:4.31.0'
     // twitter-core login and api access
@@ -33,6 +35,7 @@ dependencies {
 
     // httpClient
     compile 'org.apache.httpcomponents:httpclient:4.5.5'
+
 
     implementation 'com.google.android.gms:play-services-maps:11.8.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
