@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.tetard.streetlive.Database.DatabaseHandler;
@@ -79,6 +81,8 @@ public class AuthentificationActivity extends AppCompatActivity {
         mTwitterAuthClient = new TwitterAuthClient();
     }
     public void connectButton(View view) {
+        EditText but = findViewById(R.id.name_enter);
+        but.getText();
         Intent intent = new Intent(this, ArtistLocate.class);
         startActivity(intent);
     }
@@ -102,7 +106,6 @@ public class AuthentificationActivity extends AppCompatActivity {
             @Override
             public void onCancel() {
                 Log.wtf("CANCEL", "entered cancel");
-
                 // App code
             }
 
@@ -120,6 +123,7 @@ public class AuthentificationActivity extends AppCompatActivity {
             @Override
             public void success(Result<TwitterSession> result) {
                 Log.wtf("SUCESS", "entered success");
+
                 TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
                 TwitterAuthToken authToken = session.getAuthToken();
                 _token = authToken.token;
