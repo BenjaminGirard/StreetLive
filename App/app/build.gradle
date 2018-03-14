@@ -9,6 +9,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -19,16 +20,22 @@ android {
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
     }
+
+    defaultConfig {
+        multiDexEnabled true
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.0.2'
-    implementation 'com.android.support:design:27.0.2'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:design:27.1.0'
 
     // facebook sdk
     implementation 'com.facebook.android:facebook-android-sdk:4.31.0'
     // twitter-core login and api access
+    implementation 'com.android.support:support-v4:27.1.0'
+    implementation 'com.android.support:support-vector-drawable:27.1.0'
     compile 'com.twitter.sdk.android:twitter-core:3.1.1'
     // tweets UI
     //compile 'com.twitter.sdk.android:tweet-ui:3.1.1'

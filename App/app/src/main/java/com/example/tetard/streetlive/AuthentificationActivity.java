@@ -59,6 +59,19 @@ public class AuthentificationActivity extends AppCompatActivity {
     String              _token;
     String              _secret;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        FBConnection();
+        twitterConnectionInit();
+
+        setContentView(R.layout.activity_authentification);
+
+        twitterLoginCallback();
+        mTwitterAuthClient = new TwitterAuthClient();
+    }
+
     private void FBConnection() {
         /*
         *  Facebook initialization (app ID and secret in manifests/AndroidManifest.xml)
@@ -81,19 +94,6 @@ public class AuthentificationActivity extends AppCompatActivity {
         Twitter.initialize(config);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        FBConnection();
-        twitterConnectionInit();
-
-        setContentView(R.layout.activity_authentification);
-
-        twitterLoginCallback();
-        mTwitterAuthClient = new TwitterAuthClient();
-
-    }
     public void connectButton(View view) {
         EditText username = (EditText) findViewById(R.id.name_enter);
         Log.wtf("username", username.getText().toString());
