@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Inscription - StreetLive</title>
+	<meta charset="utf-8" />
+	<link rel="shortcut icon" href="../media/favicon.ico">
+	<link rel="stylesheet" href="../css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="../css/inscription.css">
+</head>
+<body>
+	<section>
+		<div id="sign-up">
+			<div class="row" style="height: 100%">
+				<div class="col-2">
+					<img src="../media/logo_streetlive.png" style="height: 90%; margin: auto;" />
+				</div>
+				<div class="col-10">
+					<h1>Sign Up</h1>
+				</div>
+			</div>
+		</div>
+		<div style="height: 0.3%; background-color: black"></div>
+		<div id="formulaire">
+			<form method="post" action="traitement.php">
+				<div class="row" style="padding-bottom: 5%">
+					<input type="text" name="name" id="name" placeholder="Name" />
+					<input type="text" name="firstname" id="firstname" placeholder="Firstname" />
+				</div>
+				<div class="row">
+					<input type="text" name="email" id="email" placeholder="Email" />
+					<input type="number" name="number" id="number" placeholder="Number" />
+				</div>
+				<!-- <input type="password" name="password" id="password" placeholder="Password" />
+				<input type="submit" value="CONNEXION" id="valid-connexion" /> -->
+			</form>
+		</div>
+	</section>
+</body>
+</html>

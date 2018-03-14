@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<article lang="">
+  <sect1 id="connexion">
+    <para><inlinegraphic fileref="../media/logo_streetlive.png" width="0.7862inch" depth="0.3929inch"/> </para>
+    <para>StreetLive</para>
+  </sect1>
+  <sect1 id="formulaire">
+    <para><anchor id="login"/> <anchor id="password"/> <anchor id="valid-connexion"/> <anchor id="inscription"/> </para>
+    <para><inlinegraphic fileref="../media/fb.png" width="0.7862inch" depth="0.3929inch"/> <inlinegraphic fileref="../media/twitter.png" width="0.7862inch" depth="0.3929inch"/> </para>
+  </sect1>
+</article>
