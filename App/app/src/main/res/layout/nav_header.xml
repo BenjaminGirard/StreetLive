@@ -3,19 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="140dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="?attr/colorPrimaryDark"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical"
-    android:gravity="bottom">
-
-    <ImageView
-        android:id="@+id/userImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/img"
-        />
-
+    android:gravity="bottom"
+    tools:context="com.example.tetard.streetlive.MapActivity">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_profile_image"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:src="@drawable/picture"
+        android:clickable="true"
+        android:focusable="true"
+        app:civ_border_color="@color/colorAccent"
+        app:civ_border_width="1dp" />
     <TextView
         android:id="@+id/username"
         android:layout_width="match_parent"

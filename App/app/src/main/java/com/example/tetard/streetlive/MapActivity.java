@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,6 +26,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.twitter.sdk.android.core.models.Image;
 import com.twitter.sdk.android.core.models.Search;
 
 public class MapActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
@@ -39,6 +43,21 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
 
         initGoogleMaps();
         toolbarConfig();
+    }
+
+    private void searchViewConfig(Menu menu) {
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = //(SearchView) MenuItemCompat.getActionView(search);
+                (SearchView)menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(new ComponentName(getApplicationContext(), SearchResultsActivity.class)));
+
+        searchView.setIconifiedByDefault(false);
+        searchView.setBackgroundColor(Color.WHITE);
+        /*        ImageView view = (ImageView) menu.findItem(R.id.search);
+        view.setImageResource(R.drawable.ic_voice);
+  */
     }
 
     private void toolbarConfig() {
@@ -62,16 +81,9 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
 
         /**
-         *  FIIIIIIIXXXXX
+         *  change location in map with searchview
          */
-
-/*        MenuItem search = menu.findItem(R.id.search);
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
-                //(SearchView)menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(new ComponentName(getApplicationContext(), SearchResultsActivity.class)));;*/
+        searchViewConfig(menu);
         return true;
     }
 
@@ -103,7 +115,14 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         // For example, swap UI fragments here
 
         switch (menuItem.getItemId()) {
+           case R.id.user_profile_image:
+                Intent image = new Intent(this, AccountActivity.class);
+                startActivity(image);
+                // go to account
+                return true;
             case R.id.nav_account:
+                Intent account = new Intent(this, AccountActivity.class);
+                startActivity(account);
                 // go to account
                 return true;
             case R.id.nav_favorites:
@@ -133,4 +152,5 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         _map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         _map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
+
 }

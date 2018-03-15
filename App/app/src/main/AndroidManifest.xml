@@ -21,7 +21,6 @@
         <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar" -->
 
 
-
         <!--
          The API key for Google Maps-based APIs is defined as a string resource.
          (See the file "res/values/google_maps_api.xml").
@@ -70,25 +69,28 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateUserActivity" />
-        <activity android:name=".MapActivity" />
+        <activity
+            android:name=".MapActivity"
+            android:theme="@style/CustomAppTheme">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".SearchResultsActivity"
-            android:theme="@style/Theme.AppCompat.Light"
-            android:launchMode="singleTop">
+        <activity
+            android:name=".SearchResultsActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat.Light">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
             <!-- search bar -->
 
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable"
-                android:value=".activities.SearchResultActivity"/>
-
         </activity>
-
+        <activity android:name=".AccountActivity"
+            android:theme="@style/CustomAppTheme"/>
     </application>
 
 </manifest>

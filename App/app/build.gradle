@@ -43,6 +43,8 @@ dependencies {
     // httpClient
     compile 'org.apache.httpcomponents:httpclient:4.5.5'
 
+    // shapes (circle)
+    compile 'de.hdodenhof:circleimageview:2.2.0'
 
     implementation 'com.google.android.gms:play-services-maps:11.8.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
