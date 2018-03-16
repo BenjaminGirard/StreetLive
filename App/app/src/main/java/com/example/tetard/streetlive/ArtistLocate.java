@@ -73,7 +73,7 @@ public class ArtistLocate extends AppCompatActivity implements
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15));
 
-        Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
 
     }
 
@@ -107,19 +107,19 @@ public class ArtistLocate extends AppCompatActivity implements
         } else if (mMap != null) {
             // Access to the location has been granted to the app.
             mMap.setMyLocationEnabled(true);
+            CameraFocusOnCurrentPosition();
         }
-        CameraFocusOnCurrentPosition();
     }
 
 
     @Override
     public void onMyLocationClick(@NonNull Location location) {
-        Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
+        //Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
     }
 
     @Override
     public boolean onMyLocationButtonClick() {
-        Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
         // Return false so that we don't consume the event and the default behavior still occurs
         // (the camera animates to the user's current position).
         return false;
@@ -147,7 +147,8 @@ public class ArtistLocate extends AppCompatActivity implements
         super.onResumeFragments();
         if (mPermissionDenied) {
             // Permission was not granted, display error dialog.
-            showMissingPermissionError();
+            //showMissingPermissionError();
+            Toast.makeText(this, "You should grant location permission to get an optimal experience...", Toast.LENGTH_SHORT).show();
             mPermissionDenied = false;
         }
     }
