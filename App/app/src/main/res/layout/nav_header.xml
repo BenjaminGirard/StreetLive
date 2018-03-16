@@ -10,17 +10,16 @@
     android:orientation="vertical"
     android:gravity="bottom"
     tools:context="com.example.tetard.streetlive.MapActivity">
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/user_profile_image"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:src="@drawable/picture"
-        android:clickable="true"
-        android:focusable="true"
-        app:civ_border_color="@color/colorAccent"
-        app:civ_border_width="1dp" />
+
+    <ImageButton
+        android:id="@+id/profile_pic"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:padding="5dp" />
+
     <TextView
         android:id="@+id/username"
         android:layout_width="match_parent"
