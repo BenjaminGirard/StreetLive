@@ -25,7 +25,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -50,9 +52,14 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
 
         initGoogleMaps();
         toolbarConfig();
+        initImageButton();
     }
 
     private void searchViewConfig(Menu menu) {
+
+        /**
+         * Configuration search bar
+         */
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = //(SearchView) MenuItemCompat.getActionView(search);
@@ -68,6 +75,9 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
     }
 
     private void toolbarConfig() {
+        /**
+         * Configuration tool bar
+         */
         _toolbar = (Toolbar) findViewById(R.id.mapToolbar);
         _drawerLayout = findViewById(R.id.drawer_layout);
 
@@ -83,14 +93,16 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
     }
 
     public void initImageButton() {
-        ImageView mIcon = findViewById(R.id.profile_pic);
-//        Button mFollow = findViewById(R.id.btnFollow);
 
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.picture);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView =  navigationView.getHeaderView(0);
+        ImageButton nav_user = hView.findViewById(R.id.profile_pic);
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.forest);
         RoundedBitmapDrawable mDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
         mDrawable.setCircular(true);
         mDrawable.setColorFilter(ContextCompat.getColor(this, R.color.colorAccent), PorterDuff.Mode.DST_OVER);
-        mIcon.setImageDrawable(getResources().getDrawable(R.drawable.picture));
+        nav_user.setImageDrawable(mDrawable);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -116,7 +128,6 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         switch (item.getItemId()) {
             case android.R.id.home:
                 _drawerLayout.openDrawer(GravityCompat.START);
-                initImageButton();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -133,7 +144,7 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         // For example, swap UI fragments here
 
         switch (menuItem.getItemId()) {
-           case R.id.user_profile_image:
+           case R.id.profile_pic:
                 Intent image = new Intent(this, AccountActivity.class);
                 startActivity(image);
                 // go to account
