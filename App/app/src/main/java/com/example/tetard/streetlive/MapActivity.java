@@ -1,6 +1,7 @@
 package com.example.tetard.streetlive;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -38,6 +40,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -51,7 +54,8 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         OnMapReadyCallback,
         GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationClickListener,
-        ActivityCompat.OnRequestPermissionsResultCallback {
+        ActivityCompat.OnRequestPermissionsResultCallback,
+        LocationListener {
 
     /**
      * navigation drawer variables
@@ -67,11 +71,17 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
     /**
      * Google maps Variables
      */
-    private View    mapView;
+    private View mapView;
     private boolean mPermissionDenied = false;
     private GoogleMap _map;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
+    /**
+     * Location variable
+     */
+    private LocationManager locationManager;
+    private static final long MIN_TIME = 400;
+    private static final float MIN_DISTANCE = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -264,36 +274,6 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         enableMyLocation();
     }
 
-    private void CameraFocusOnCurrentPosition() {
-        LocationManager locationManager = (LocationManager)
-                getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Location location = locationManager.getLastKnownLocation(locationManager
-                .getBestProvider(criteria, false));
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
-
-        _map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15));
-
-        //Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
-
-    }
-
     /**
      * Enables the My Location layer if the fine location permission has been granted.
      */
@@ -305,8 +285,9 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
                     Manifest.permission.ACCESS_FINE_LOCATION, true);
         } else if (_map != null) {
             // Access to the location has been granted to the app.
+            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
             _map.setMyLocationEnabled(true);
-            CameraFocusOnCurrentPosition();
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
         }
     }
 
@@ -329,10 +310,10 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
             return;
         }
-
         if (PermissionUtils.isPermissionGranted(permissions, grantResults,
                 Manifest.permission.ACCESS_FINE_LOCATION)) {
             // Enable the my location layer if the permission has been granted.
+
             enableMyLocation();
         } else {
             // Display the missing permission error dialog when the fragments resume.
@@ -341,21 +322,29 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
     }
 
     @Override
+    public void onLocationChanged(Location location) {
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+        _map.animateCamera(cameraUpdate);
+        locationManager.removeUpdates(this);
+    }
+
+    @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
         if (mPermissionDenied) {
             // Permission was not granted, display error dialog.
-            //showMissingPermissionError();
             Toast.makeText(this, "You should grant location permission to get an optimal experience...", Toast.LENGTH_SHORT).show();
             mPermissionDenied = false;
         }
     }
 
-    /**
-     * Displays a dialog with error message explaining that the location permission is missing.
-     */
-    private void showMissingPermissionError() {
-        PermissionUtils.PermissionDeniedDialog
-                .newInstance(true).show(getSupportFragmentManager(), "dialog");
-    }
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) { }
+
+    @Override
+    public void onProviderEnabled(String provider) { }
+
+    @Override
+    public void onProviderDisabled(String provider) { }
 }
