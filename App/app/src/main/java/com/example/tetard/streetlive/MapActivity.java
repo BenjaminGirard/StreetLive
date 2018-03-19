@@ -1,15 +1,22 @@
 package com.example.tetard.streetlive;
 
+import android.Manifest;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -27,7 +34,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -38,11 +47,30 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.twitter.sdk.android.core.models.Image;
 import com.twitter.sdk.android.core.models.Search;
 
-public class MapActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
-    private DrawerLayout    _drawerLayout;
-    private Toolbar         _toolbar;
-    private GoogleMap       _map;
+public class MapActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
+        OnMapReadyCallback,
+        GoogleMap.OnMyLocationButtonClickListener,
+        GoogleMap.OnMyLocationClickListener,
+        ActivityCompat.OnRequestPermissionsResultCallback {
 
+    /**
+     * navigation drawer variables
+     */
+    private DrawerLayout _drawerLayout;
+
+    /**
+     * Toolbar variables
+     */
+    private Toolbar _toolbar;
+
+
+    /**
+     * Google maps Variables
+     */
+    private View    mapView;
+    private boolean mPermissionDenied = false;
+    private GoogleMap _map;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
 
     @Override
@@ -55,15 +83,23 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         initImageButton();
     }
 
+            /** * * * * * * * * * * * * * *
+             * Toolbar + navigation bar   *
+             * <p>                        *
+             * layout: activity_map.xml   *
+             * * * * * * * * * * * * * *  */
+
     private void searchViewConfig(Menu menu) {
 
         /**
          * Configuration search bar
+         *
+         * layout: activity_map.xml
          */
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = //(SearchView) MenuItemCompat.getActionView(search);
-                (SearchView)menu.findItem(R.id.search).getActionView();
+                (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(new ComponentName(getApplicationContext(), SearchResultsActivity.class)));
 
@@ -77,6 +113,8 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
     private void toolbarConfig() {
         /**
          * Configuration tool bar
+         *
+         * layout: activity_map.xml
          */
         _toolbar = (Toolbar) findViewById(R.id.mapToolbar);
         _drawerLayout = findViewById(R.id.drawer_layout);
@@ -92,18 +130,7 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    public void initImageButton() {
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        View hView =  navigationView.getHeaderView(0);
-        ImageButton nav_user = hView.findViewById(R.id.profile_pic);
-
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.forest);
-        RoundedBitmapDrawable mDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
-        mDrawable.setCircular(true);
-        mDrawable.setColorFilter(ContextCompat.getColor(this, R.color.colorAccent), PorterDuff.Mode.DST_OVER);
-        nav_user.setImageDrawable(mDrawable);
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //ajoute les entrées de menu_test à l'ActionBar
@@ -111,15 +138,10 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
 
         /**
          *  change location in map with searchview
+         *
          */
         searchViewConfig(menu);
         return true;
-    }
-
-    private void initGoogleMaps() {
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
     }
 
 
@@ -133,6 +155,39 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         return super.onOptionsItemSelected(item);
     }
 
+                /** * * * * * * * * * * * * * * * * * * * * * * * *
+                 * Navigation drawer initialisation and callback  *
+                 * <p>                                            *
+                 * layout: nav_header.xml                         *
+                 * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    public void initImageButton() {
+
+        /**
+         * Image button (profile picture) initialization
+         *
+         * layout: nav_header.xml
+         */
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView = navigationView.getHeaderView(0);
+        ImageButton nav_user = hView.findViewById(R.id.profile_pic);
+
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.forest);
+        RoundedBitmapDrawable mDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        mDrawable.setCircular(true);
+        mDrawable.setColorFilter(ContextCompat.getColor(this, R.color.colorAccent), PorterDuff.Mode.DST_OVER);
+        nav_user.setImageDrawable(mDrawable);
+    }
+
+    /**
+     * Buttons in navigation drawer
+     * <p>
+     * layout: nav_header.xml
+     *
+     * @param menuItem
+     * @return
+     */
+
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         // set item as selected to persist highlight
@@ -144,7 +199,7 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         // For example, swap UI fragments here
 
         switch (menuItem.getItemId()) {
-           case R.id.profile_pic:
+            case R.id.profile_pic:
                 Intent image = new Intent(this, AccountActivity.class);
                 startActivity(image);
                 // go to account
@@ -172,14 +227,135 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         return true;
     }
 
+            /** * * * * * * * * * * * * *
+             *     Google map API       *
+             * <p>                      *
+             * layout: activity_map.xml *
+             * * * * * * * * * * * * *  */
+
+    private void initGoogleMaps() {
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapView = mapFragment.getView();
+        mapFragment.getMapAsync(this);
+    }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         _map = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        _map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        _map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        /**
+         *  Move location button to the bottom right of the screen
+         */
+        if (mapView != null &&
+                mapView.findViewById(Integer.parseInt("1")) != null) {
+            // Get the button view
+            View locationButton = ((View) mapView.findViewById(Integer.parseInt("1")).getParent()).findViewById(Integer.parseInt("2"));
+            // and next place it, on bottom right (as Google Maps app)
+            RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)
+                    locationButton.getLayoutParams();
+            // position on right bottom
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, 0);
+            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
+            layoutParams.setMargins(0, 0, 30, 30);
+        }
+        _map.setOnMyLocationButtonClickListener(this);
+        _map.setOnMyLocationClickListener(this);
+        enableMyLocation();
     }
 
+    private void CameraFocusOnCurrentPosition() {
+        LocationManager locationManager = (LocationManager)
+                getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Location location = locationManager.getLastKnownLocation(locationManager
+                .getBestProvider(criteria, false));
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+
+        _map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 15));
+
+        //Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
+
+    }
+
+    /**
+     * Enables the My Location layer if the fine location permission has been granted.
+     */
+    private void enableMyLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Permission to access the location is missing.
+            PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,
+                    Manifest.permission.ACCESS_FINE_LOCATION, true);
+        } else if (_map != null) {
+            // Access to the location has been granted to the app.
+            _map.setMyLocationEnabled(true);
+            CameraFocusOnCurrentPosition();
+        }
+    }
+
+    @Override
+    public void onMyLocationClick(@NonNull Location location) {
+        //Toast.makeText(this, "Current location:\n" + location, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public boolean onMyLocationButtonClick() {
+        //Toast.makeText(this, "MyLocation button clicked", Toast.LENGTH_SHORT).show();
+        // Return false so that we don't consume the event and the default behavior still occurs
+        // (the camera animates to the user's current position).
+        return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
+            return;
+        }
+
+        if (PermissionUtils.isPermissionGranted(permissions, grantResults,
+                Manifest.permission.ACCESS_FINE_LOCATION)) {
+            // Enable the my location layer if the permission has been granted.
+            enableMyLocation();
+        } else {
+            // Display the missing permission error dialog when the fragments resume.
+            mPermissionDenied = true;
+        }
+    }
+
+    @Override
+    protected void onResumeFragments() {
+        super.onResumeFragments();
+        if (mPermissionDenied) {
+            // Permission was not granted, display error dialog.
+            //showMissingPermissionError();
+            Toast.makeText(this, "You should grant location permission to get an optimal experience...", Toast.LENGTH_SHORT).show();
+            mPermissionDenied = false;
+        }
+    }
+
+    /**
+     * Displays a dialog with error message explaining that the location permission is missing.
+     */
+    private void showMissingPermissionError() {
+        PermissionUtils.PermissionDeniedDialog
+                .newInstance(true).show(getSupportFragmentManager(), "dialog");
+    }
 }
