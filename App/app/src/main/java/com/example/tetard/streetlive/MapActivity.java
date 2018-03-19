@@ -9,8 +9,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -183,10 +187,16 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         ImageButton nav_user = hView.findViewById(R.id.profile_pic);
 
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.forest);
-        RoundedBitmapDrawable mDrawable = RoundedBitmapDrawableFactory.create(getResources(), bitmap);
+        Bitmap draw = bitmap.createScaledBitmap(bitmap, 200, 200, false);
+        RoundedBitmapDrawable mDrawable = RoundedBitmapDrawableFactory.create(getResources(), draw);
         mDrawable.setCircular(true);
         mDrawable.setColorFilter(ContextCompat.getColor(this, R.color.colorAccent), PorterDuff.Mode.DST_OVER);
         nav_user.setImageDrawable(mDrawable);
+    }
+
+    public void imageProfileCallback(View v) {
+        Intent image = new Intent(this, AccountActivity.class);
+        startActivity(image);
     }
 
     /**
@@ -209,11 +219,11 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         // For example, swap UI fragments here
 
         switch (menuItem.getItemId()) {
-            case R.id.profile_pic:
+/*            case R.id.profile_pic:
                 Intent image = new Intent(this, AccountActivity.class);
                 startActivity(image);
                 // go to account
-                return true;
+                return true;*/
             case R.id.nav_account:
                 Intent account = new Intent(this, AccountActivity.class);
                 startActivity(account);

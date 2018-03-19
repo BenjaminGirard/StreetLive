@@ -19,6 +19,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:clickable="true"
+        android:onClick="imageProfileCallback"
         android:padding="5dp" />
 
     <TextView
