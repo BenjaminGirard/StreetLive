@@ -1,0 +1,13 @@
+Package         Version
+--------------- -------
+boto3           1.6.10 
+botocore        1.9.10 
+docutils        0.14   
+jmespath        0.9.3  
+pip             9.0.1  
+python-dateutil 2.6.1  
+s3transfer      0.1.13 
+setuptools      28.8.0 
+simplejson      3.13.2 
+six             1.11.0 
+tornado         5.0    

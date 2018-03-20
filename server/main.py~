@@ -1,0 +1,41 @@
+import tornado.ioloop
+import tornado.web
+
+import muse
+
+class MainHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.write("Hello, world")
+
+class HomeHandler(tornado.web.RequestHandler):
+    def get(self):
+        param = self.get_query_argument("q", "Charles")
+        self.write("Welcome home " + param)
+
+class LoginHandler(tornado.web.RequestHandler):
+    def post(self, login, password):
+        self.write("305")
+
+class ConnexionHandler(tornado.web.RequestHandler):
+    def get(self):
+        user_id = self.get_query_argument("user", "")
+        user_pwd = self.get_query_argument("pwd", "")
+        if user_id != "" and user_pwd != "":
+            self.write(muse().connexionUser(user_id, user_pwd))
+        else:
+            self.write("404")
+
+
+def make_app():
+    return tornado.web.Application([
+        (r"/", MainHandler),
+        (r"/home", HomeHandler),
+        (r"/login", LoginHandler),
+
+        (r"/connexion", ConnexionHandler)
+    ])
+
+if __name__ == "__main__":
+    app = make_app()
+    app.listen(8888)
+    tornado.ioloop.IOLoop.current().start()
