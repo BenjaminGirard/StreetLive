@@ -5,14 +5,14 @@ class muse(object):
 
   table = boto3.resource('dynamodb', region_name='eu-west-1').Table("User")
 
-  def addUser(self, first_name, last_name, user_mail, user_birthday, user_mobile='617763092'):
+  def addUser(self, first_name, last_name, user_mail, user_birthday, user_mobile):
     if self.table.scan(
         FilterExpression=Attr("info.mail").eq(user_mail)
       )['Items'] != []:
       return '305'
     return self.table.put_item(
       Item={
-        'id': len(getUser()),
+        'id': len(self.getUser()),
         'info': {
           'first_name': first_name.capitalize(),
           'last_name': last_name.capitalize(),
