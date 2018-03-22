@@ -10,31 +10,6 @@
         tools:context="com.example.tetard.streetlive.MapActivity">
 
         <!-- Layout to contain contents of main body of screen (drawer will slide over this) -->
-        <FrameLayout
-            android:id="@+id/content_frame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/mapToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-            <!-- Google Maps -->
-            <fragment
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="com.example.tetard.streetlive.MapActivity" />
-
-        </FrameLayout>
-
-
-    <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
         <android.support.design.widget.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="wrap_content"
@@ -43,4 +18,43 @@
             android:fitsSystemWindows="true"
             app:menu="@menu/drawer_view"
             app:headerLayout="@layout/nav_header"/>
+
+
+    <!-- Container for contents of drawer - use NavigationView to make configuration easier -->
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/mapToolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    android:elevation="4dp"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+                <!-- Google Maps -->
+                <fragment
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    tools:context="com.example.tetard.streetlive.MapActivity"/>
+
+                <ImageButton
+                    android:layout_marginHorizontal="290dp"
+                    android:layout_marginVertical="450dp"
+                    android:id="@+id/addMarker"
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_marginBottom="-16dp"
+                    android:background="@null"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="addMarker"
+                    android:src="@drawable/button_plus" />
+        </FrameLayout>
+
 </android.support.v4.widget.DrawerLayout>

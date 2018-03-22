@@ -97,11 +97,11 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         initImageButton();
     }
 
-            /** * * * * * * * * * * * * * *
-             * Toolbar + navigation bar   *
-             * <p>                        *
-             * layout: activity_map.xml   *
-             * * * * * * * * * * * * * *  */
+    /** * * * * * * * * * * * * * *
+     * Toolbar + navigation bar   *
+     * <p>                        *
+     * layout: activity_map.xml   *
+     * * * * * * * * * * * * * *  */
 
     private void searchViewConfig(Menu menu) {
 
@@ -169,11 +169,11 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         return super.onOptionsItemSelected(item);
     }
 
-                /** * * * * * * * * * * * * * * * * * * * * * * * *
-                 * Navigation drawer initialisation and callback  *
-                 * <p>                                            *
-                 * layout: nav_header.xml                         *
-                 * * * * * * * * * * * * * * * * * * * * * * * *  */
+    /** * * * * * * * * * * * * * * * * * * * * * * * *
+     * Navigation drawer initialisation and callback  *
+     * <p>                                            *
+     * layout: nav_header.xml                         *
+     * * * * * * * * * * * * * * * * * * * * * * * *  */
 
     public void initImageButton() {
 
@@ -247,11 +247,11 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
         return true;
     }
 
-            /** * * * * * * * * * * * * *
-             *     Google map API       *
-             * <p>                      *
-             * layout: activity_map.xml *
-             * * * * * * * * * * * * *  */
+    /** * * * * * * * * * * * * *
+     *     Google map API       *
+     * <p>                      *
+     * layout: activity_map.xml *
+     * * * * * * * * * * * * *  */
 
     private void initGoogleMaps() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -350,11 +350,30 @@ public class MapActivity extends AppCompatActivity implements NavigationView.OnN
     }
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) { }
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+    }
 
     @Override
-    public void onProviderEnabled(String provider) { }
+    public void onProviderEnabled(String provider) {
+    }
 
     @Override
-    public void onProviderDisabled(String provider) { }
+    public void onProviderDisabled(String provider) {
+    }
+
+    public void addMarker(View view) {
+        // Ask user the calendar and event type
+        // Save in database
+        if (locationManager == null)
+            return;
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            enableMyLocation();
+            return;
+        }
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        _map.addMarker(new MarkerOptions()
+                .position(new LatLng(location.getLatitude(), location.getLongitude()))
+                .title("point"));
+        Toast.makeText(this, "Du sale !", Toast.LENGTH_SHORT).show();
+    }
 }
